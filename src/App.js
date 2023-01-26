@@ -1,24 +1,50 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getLoginStatus } from './redux/feature/auth/authService';
+import { SET_LOGIN } from './redux/feature/auth/authSlice';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Register from './pages/auth/Register';
 import './App.css';
+import Home from './pages/Home/Home';
+import Login from './pages/auth/Login';
+import Forget from './pages/auth/Forget';
+import Reset from './pages/auth/Reset';
+import Sidebar from './components/Sidebar/Sidebar';
+import Layout from './components/layout/Layout';
+import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function loginStatus() {
+      //  const status = await getLoginStatus();
+      dispatch(SET_LOGIN(true));
+    }
+    loginStatus();
+  }, [dispatch]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ToastContainer />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/forget' element={<Forget />} />
+        <Route path='/resetpassword/:resetToken' element={<Reset />} />
+        <Route
+          path='/dashboard'
+          element={
+            <Sidebar>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </Sidebar>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
