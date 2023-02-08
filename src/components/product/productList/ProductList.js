@@ -15,13 +15,14 @@ import { confirmAlert } from 'react-confirm-alert';
 import {
   deleteProduct,
   getProducts,
-} from '../../../redux/features/product/productSlice';
+} from '../../../redux/feature/product/productSlice';
 import { Link } from 'react-router-dom';
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState();
   const filteredProducts = useSelector(selectFilteredPoducts);
 
+  console.log(products);
   const dispatch = useDispatch();
 
   const shortenedText = (text, n) => {
@@ -32,8 +33,8 @@ const ProductList = ({ products, isLoading }) => {
     return text;
   };
   const deleteProduct = async (id) => {
-    await dispatch(deleteProduct(id));
-    await dispatch(getProducts());
+    dispatch(deleteProduct(id));
+    dispatch(getProducts());
   };
   const confirmDelete = (id) => {
     confirmAlert({

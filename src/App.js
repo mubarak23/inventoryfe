@@ -14,6 +14,7 @@ import Reset from './pages/auth/Reset';
 import Sidebar from './components/Sidebar/Sidebar';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/dashboard/Dashboard';
+import AddProduct from './pages/AddProduct/AddProduct';
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,16 @@ function App() {
             <Sidebar>
               <Layout>
                 <Dashboard />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path='/add-product'
+          element={
+            <Sidebar>
+              <Layout>
+                <AddProduct />
               </Layout>
             </Sidebar>
           }

@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import productService from './productService';
+import {
+  addProduct,
+  fetchProduct,
+  fetchProducts,
+  removeProduct,
+  updateAProduct,
+} from './productService';
 import { toast } from 'react-toastify';
 
 const initialState = {
@@ -19,7 +25,7 @@ export const createProduct = createAsyncThunk(
   'products/create',
   async (formData, thunkAPI) => {
     try {
-      return await productService.createProduct(formData);
+      return await addProduct(formData);
     } catch (error) {
       const message =
         (error.response &&
@@ -37,8 +43,9 @@ export const createProduct = createAsyncThunk(
 export const getProducts = createAsyncThunk(
   'products/getAll',
   async (_, thunkAPI) => {
+    console.log('did we reach here product slice');
     try {
-      return await productService.getProducts();
+      return await fetchProducts();
     } catch (error) {
       const message =
         (error.response &&
@@ -57,7 +64,7 @@ export const deleteProduct = createAsyncThunk(
   'products/delete',
   async (id, thunkAPI) => {
     try {
-      return await productService.deleteProduct(id);
+      return await removeProduct(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -76,7 +83,7 @@ export const getProduct = createAsyncThunk(
   'products/getProduct',
   async (id, thunkAPI) => {
     try {
-      return await productService.getProduct(id);
+      return await fetchProduct(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -94,7 +101,7 @@ export const updateProduct = createAsyncThunk(
   'products/updateProduct',
   async ({ id, formData }, thunkAPI) => {
     try {
-      return await productService.updateProduct(id, formData);
+      return await updateAProduct(id, formData);
     } catch (error) {
       const message =
         (error.response &&

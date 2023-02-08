@@ -6,7 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { loginUser, validateEmail } from '../../redux/feature/auth/authService';
-import { SET_LOGIN, SET_NAME } from '../../redux/feature/auth/authSlice';
+import {
+  SET_LOGIN,
+  SET_NAME,
+  SET_TOKEN,
+} from '../../redux/feature/auth/authSlice';
 import Loader from '../../components/Loader/Loader';
 
 const initialState = {
@@ -41,6 +45,8 @@ const Login = () => {
     try {
       const data = await loginUser(userLogin);
       dispatch(SET_LOGIN(true));
+      dispatch(SET_TOKEN(data.token));
+      localStorage.setItem('token', JSON.stringify(data.token));
       dispatch(SET_NAME(data.firstName));
       navigate('/dashboard');
       setIsLoading(false);

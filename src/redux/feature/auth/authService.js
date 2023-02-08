@@ -44,7 +44,7 @@ export const loginUser = async (userLoginData) => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-    toast.error(message);
+    toast.error(error.response.data.message);
   }
 };
 
